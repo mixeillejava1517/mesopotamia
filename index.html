@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ძველი შუამდინარეთის ელექტრონული პორტალი</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f4f4f4}
+header{background:#1b1b1b;color:white;padding:20px}
+header h1{margin:0;font-size:22px}
+.container{display:flex}
+nav{width:280px;background:#2c2c2c;color:white;height:100vh;overflow:auto}
+nav ul{list-style:none;padding:0;margin:0}
+nav li{padding:10px 15px;border-bottom:1px solid #444;cursor:pointer;position:relative}
+nav li:hover{background:#444}
+nav li.active{background:#FFD700;color:#1b1b1b;font-weight:bold}
+.sub{display:none;background:#ffffff;color:#000;}
+.sub li{padding-left:30px;border-bottom:1px solid #ccc;cursor:pointer;}
+main{flex:1;padding:30px;overflow:auto;position:relative}
+.card{background:white;padding:20px;margin-bottom:20px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+.table{width:100%;border-collapse:collapse}
+.table td{border-bottom:1px solid #ddd;padding:8px}
+.artifact-images{display:flex;margin-bottom:10px;gap:10px}
+.artifact-images img{max-width:150px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.2);cursor:pointer;}
+.search-box{margin-bottom:20px}
+.search-box input{width:100%;padding:8px;border-radius:5px;border:1px solid #ccc;font-size:14px}
+footer{text-align:center;padding:15px;background:#1b1b1b;color:white}
+
+/* მობილურისთვის */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    nav {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    
+    main {
+        padding: 15px;
+    }
+    
+    .artifact-images {
+        flex-wrap: wrap;
+    }
+    
+    .artifact-images img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    header h1 {
+        font-size: 18px;
+    }
+}
+
+/* აქადის ტექსტის ფანჯარა */
+#acadText{display:none;background:#f9f9f9;padding:20px;margin-top:20px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+#acadGallery{display:none;margin-top:10px;display:flex;gap:10px;}
+#acadGallery img{width:100px;cursor:pointer;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.2);}
+</style>
+</head>
+<body>
+
+<header>
+<h1>ძველი შუამდინარეთის ელექტრონული პორტალი</h1>
+</header>
+
+<div class="container">
+
+<nav>
+<div class="search-box">
+<input type="text" id="navSearch" placeholder="ძიება..." onkeyup="filterNav()">
+</div>
+<ul id="menu">
+  <li onclick="toggleSub(event,this)">ისტორია
+    <ul class="sub">
+      <li>შუმერული ქალაქ-სახელმწიფოები</li>
+      <li>აქადის იმპერია</li>
+      <li>ურს III დინასტია</li>
+      <li onclick="toggleSub(event,this)">ბაბილონი
+        <ul class="sub">
+          <li>ძველი ბაბილონი</li>
+          <li>შუა ბაბილონი</li>
+          <li>ახალი ბაბილონი</li>
+        </ul>
+      </li>
+      <li onclick="toggleSub(event,this)">ასურეთი
+        <ul class="sub">
+          <li>ძველი სამეფო</li>
+          <li>შუა სამეფო</li>
+          <li>ახალი სამეფო</li>
+        </ul>
+      </li>
+      <li>კასიტები</li>
+      <li>მითანი</li>
+      <li>ხეთები</li>
+      <li>პერიფერია</li>
+    </ul>
+  </li>
+  <li onclick="toggleSub(event,this)">ხელოვნება
+    <ul class="sub">
+      <li onclick="toggleSub(event,this)">საბეჭდავები
+        <ul class="sub">
+          <li>ურუქ-ვარქას პერიოდი</li>
+          <li>ადრედინასტიური პერიოდი</li>
+          <li onclick="showAcadPeriod()">აქადური პერიოდი</li>
+          <li>პოსტაქადური - ურის III</li>
+          <li>ძველ ბაბილონური პერიოდი</li>
+          <li>კასიტური პერიოდი</li>
+          <li>ასურული პერიოდი</li>
+          <li>აქემენიდური პერიოდი</li>
+        </ul>
+      </li>
+      <li>სხვა არტეფაქტები</li>
+    </ul>
+  </li>
+  <!-- გამოყენებულია პირდაპირი <a> ბმული -->
+  <li><a href="inscriptions.html" style="color:white;text-decoration:none;display:block;">წარწერები</a></li>
+  <li><a href="translations.html" style="color:white;text-decoration:none;display:block;">თარგმანები</a></li>
+    <li onclick="toggleSub(event,this)">სტატიები
+  <ul class="sub">
+    <li>
+      <a href="articles.html" target="_blank" style="color:black;text-decoration:none;display:block;">
+      სამეცნიერო სტატიები
+      </a>
+    </li>
+
+    <li>
+      <a href="pdf-library.html" target="_blank" style="color:black;text-decoration:none;display:block;">
+      📚 PDF ბიბლიოთეკა
+      </a>
+    </li>
+  </ul>
+</li>
+  <li><a href="misc.html" style="color:white;text-decoration:none;display:block;">სხვადასხვა</a></li>
+</ul>
+</nav>
+
+
+<main>
+
+<div class="search-box">
+<input type="text" id="artifactSearch" placeholder="ძიება ინვენტარის ნომრით..." onkeyup="searchArtifact()">
+</div>
+
+<div class="card">
+<h2>საიტის მიზანი</h2>
+<p>ეს პორტალი წარმოადგენს ძველი შუამდინარეთის აკადემიურ მონაცემთა ბაზას. საიტი მოიცავს ისტორიას, ხელოვნებას, ლურსმულ ტექსტებს, თარგმანებსა და სამეცნიერო სტატიებს.</p>
+</div>
+
+<!-- აქადის ტექსტის ფანჯარა -->
+<div id="acadText" style="display:none;background:#f9f9f9;padding:20px;margin-top:20px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1); white-space: pre-line;">
+<h2>აქადის პერიოდი</h2>
+<p>
+აქადის პერიოდი იწყება სახვით ხელოვნებაში ახალი ე.წ. გლიპტიკის „აქადური სტილის“ აღმოცენებით. ეს სტილი არ არის გვიანი ED II-III ფორმების უბრალო ევოლუცია, არამედ მხატვრული განვითარების სრულიად ახალ, განსხვავებული ეტაპს წარმოადგენს.
+ადრედინასტიური გლიპტიკისგან განსხვავებით, რომელიც ხშირად განმეორებადი იყო და მოიცავდა სიმეტრიულ ცხოველთა ბრძოლის ფრიზებს, აქადურმა სტილმა შემოიტანა მრავალი განსხვავება, როგორიცაა: თემატური ცვლილებები, ახალი სიუჟეტები. აქადის ხანის ოსტატებმა უარი თქვეს უბრალო დეკორატიულ განმეორებებზე და შექმნეს დინამიკური, ნარატიული სცენები. მაგალითად, ღმერთების ბრძოლა და მითოლოგიური სცენები, ღვთებათა მითოლოგიური სცენების ილუსტრირება, ადამიანი-ხარის ნაცვლად გმირის წინა პლანზე წამოწევა და რაც მთავარია სამხრეთ შუამდინარული პანთეონის გამოსახვა ყველა სახასიათო დეტალით, რითაც რელიგიის გათავისება გამოაცხადეს.
+</p>
+<p>
+საბეჭდავების ძირითადი სცენები:
+1) ღმერთების ბრძოლა - ეს არის ერთ-ერთი ყველაზე დიდი სიახლე და არც თუ ისე გავრცელებული თემა (მურის გამონაკლის ნიმუშებს მიეკუთვნება) ამ პერიოდის საბეჭდავების ხელოვნებაში. საბეჭდავებზე გამოსახულია ღვთაებები, რომლებიც ერთმანეთს უპირისპირდებიან, ან გმირები, რომლებიც ებრძვიან მითოლოგიურ ურჩხულებსა და დემონებს. ეს არის ED პაექრობის სცენების გაგრძელება, სადაც ღმერთები მონაწილეობენ.
+2) ნადიმის სცენები (ადრედინასტიური პერიოდის) გარდაიქმნა მითოლოგიური სცენების ილუსტრაციად, სადაც ღმერთები მონაწილეობენ.
+3) გმირის გამოსახვა ადამიანი-ხარის ნაცვლად: ადრედინასტიურ პერიოდის გავრცელებული მოდელი – ენქიდუს ინსპირაციით ადამიანი-ხარის გამოსახულება, აქადურ ხანაში ე.წ. „შიშველი გმირის“ ფიგურამ ჩაანაცვლა, რომელიც იბრძვის ლომების ან სხვა მტაცებლების წინააღმდეგ.
+შიშველი გმირი, ხშირად ლახმუს (Lahmu) უწოდებენ. ეს სახელი ნიშნავს „თმიანს“. მას აქვს ექვსი დამახასიათებელი კულული (თმის ხვეული) და გრძელი წვერი. ის არის კოსმოსური წესრიგის მცველი, ხშირად ასოცირებული წყლის ღმერთ ენქისთან (ეასთან). სწორედ ამიტომ, საბეჭდავებზე მას ხშირად უჭირავს „ჭურჭელი საიდანაც გადმოედინება წყალი“ ან დგას წყლის ნაკადებთან. ლახმუ ჩაენაცვლა ადამიან-ხარს ლომებთან ბრძოლის სცენებში. ის მათ უკანა ფეხებით იჭერს ან ყელში სწვდება, რაც ცივილიზაციის გამარჯვებას ნიშნავს ქაოსზე.
+4) ანთროპოლოგიურ გამოსახვაზე გადასვლა. ამ შემთხვევაში ღმერთები და გმირები ძირითადად ადამიანურ ფორმებს იღებენ და არა სიმბოლურ ან ჰერალდიკურს. ისინი ხშირად გამოსახულნი არიან მმართველისმფარველობით ან ლოცვის სცენებში, რაც ხაზს უსვამს ღვთაებრივ ლეგიტიმაციას ცენტრალიზებული იმპერიული ძალაუფლებისთვის.
+5) პანთეონის გამოსახვა – აქადური პერიოდის ინოვაციაა. ხდება ღვთაებათა სახეების დადგენა, თავისი ინსიგნიები, სახე, სამოსი, რასაც აქადელი ოსტატები წარსულიდან იღებენ და სრულყოფენ, აძლევენ ანთროპომორფულ სახეს. ეს არის აქადის იმპერიის სრული ლეგიტიმაცია, სამხრეთ შუამდინარეთის პანთეონზე.
+გარდამტეხი ფაქტორია ე.წ სტილისტური ინოვაციები, როგორიცაა შესრულების ტექნიკა და კომპოზიცია. აქადური საბეჭდავები გამოირჩევიან არა მხოლოდ სიუჟეტებით, არამედ მათი შესრულების ოსტატობით. აქ სცენები არ არის სტატიკური / გაყინული. ფიგურები გამოსახულია დრამატულ მოძრაობაში, ისინი იხრებიან, იბრძვიან, გარბიან. ეს ყველაფერი ქმნის ძლიერ ნარატიულ დაძაბულობას მთლიან კომპოზიციაში.
+კიდევ ერთი განმასხვავებელი ნიშანი არის საბეჭდავზე და თუნდაც ამ პერიოდის ნებისმიერ ხელოვნების ნიმუშზე თავისუფალი სივრცის არსებობა. როგორც უკვე ზემოთ ავღნიშნეთ, ადრედინასტიური ხელოვნება ხშირად „ავსებდა“ მთელ ზედაპირს სხვადასხვა ფიგურებით, აქადელი ოსტატები კი იყენებდნენ უფრო ნაკლებ, მაგრამ შედარებით დიდ ფიგურებს, რაც კომპოზიციას უფრო მკაფიოსა და აღქმადს ხდიდა. აქადური საბეჭდავები, როგორც წესი, შესრულებულია უფრო მაღალი რელიეფით (ღრმა კვეთით) და ფიგურები უფრო მოცულობითია (ქმნის ე.წ სამგანზომილებიან ეფექტს). ეს მათ თითქმის ქანდაკებებს ამსგავსებს სიბრტყეზე. ისეთი დეტალები, როგორიცაა კუნთები, ტანსაცმლის ნაკეცები და თმა, ბევრად უფრო დახვეწილი და რეალისტურია, რაც მანამდე უპრეცედენტო ნატურალიზმს ანიჭებს ფიგურებს.
+შესაბამისად, ამის გათვალისწინებით, ის არქეოლოგიური კომპლექსები, რომლებიც შეიცავს გლიპტიკის დიდ კოლექციას, მაგრამ არც ერთ აქადურ დიზაინს, უნდა დათარიღდეს, როგორც ადრედინასტიური III B პერიოდით.
+ხოლო კომპლექსი ან ფენა, რომელიც შეიცავს თუნდაც ერთ აქადურ გლიპტიკის ნიმუშს და მასთან ერთად თავს იყრის სხვა სახის არქეოლოგიური არტეფაქტები, რომელიც ED III B-ს ჰგავს, უნდა დათარიღდეს, როგორც აქადური (ან „სავარაუდოდ ადრეული აქადური“, როგორც ნიფურის IV ფენის შემთხვევაში).
+</p>
+<div id="acadGallery">
+<img src="acad1.jpg" onclick="openImage(this.src)" alt="Acad Art 1">
+<img src="acad2.jpg" onclick="openImage(this.src)" alt="Acad Art 2">
+<img src="acad3.jpg" onclick="openImage(this.src)" alt="Acad Art 3">
+</div>
+</div>
+
+</main>
+
+</div>
+
+<footer>
+Mesopotamian Research Portal
+</footer>
+
+<script>
+function toggleSub(event, el){
+  if(event) event.stopPropagation();
+  el.classList.toggle('active');
+  const sub = el.querySelector(':scope > .sub');
+  if(sub){
+    sub.style.display = sub.style.display === 'block' ? 'none' : 'block';
+  }
+}
+
+// Sidebar search
+function filterNav(){
+  const val = document.getElementById('navSearch').value.toUpperCase();
+  document.querySelectorAll('nav li').forEach(li=>{
+    if(li.textContent.toUpperCase().includes(val)){
+      li.style.display='block';
+    } else {
+      li.style.display='none';
+    }
+  });
+}
+
+// Artifact search
+function searchArtifact(){
+  const val = document.getElementById('artifactSearch').value.toUpperCase();
+  document.querySelectorAll('.artifact').forEach(a=>{
+    const id = a.getAttribute('data-id');
+    a.style.display = id.toUpperCase().includes(val) ? 'block' : 'none';
+  });
+}
+
+// აქადის ტექსტის გამოჩენა
+function showAcadPeriod(){
+  document.getElementById('acadText').style.display='block';
+  document.getElementById('acadGallery').style.display='flex';
+  document.getElementById('acadText').scrollIntoView({behavior: "smooth"});
+}
+
+// გალერეის სურათის გახსნა ახალ ფანჯარაში
+function openImage(src){
+  window.open(src,'_blank');
+}
+</script>
+
+</body>
+</html>
