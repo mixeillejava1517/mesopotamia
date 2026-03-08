@@ -78,7 +78,7 @@ footer{text-align:center;padding:15px;background:#1b1b1b;color:white}
 <ul id="menu">
   <li onclick="toggleSub(event,this)">ისტორია
     <ul class="sub">
-      <li>შუმერული ქალაქ-სახელმწიფოები</li>
+      <li onclick="showSumerianStates()">შუმერული ქალაქ-სახელმწიფოები</li>
       <li>აქადის იმპერია</li>
       <li>ურს III დინასტია</li>
       <li onclick="toggleSub(event,this)">ბაბილონი
@@ -178,7 +178,25 @@ footer{text-align:center;padding:15px;background:#1b1b1b;color:white}
 <img src="acad3.jpg" onclick="openImage(this.src)" alt="Acad Art 3">
 </div>
 </div>
-
+<!-- შუმერული ქალაქ-სახელმწიფოების სტატია (ფარული) -->
+<div id="sumerian-states" style="display:none; background:#f9f9f9; padding:20px; margin-top:20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+  <h2>შუმერული ქალაქ-სახელმწიფოები</h2>
+  
+  <h3>ურუქი (Uruk)</h3>
+  <p>ურუქი იყო ერთ-ერთი პირველი და უდიდესი შუმერული ქალაქ-სახელმწიფო. სწორედ აქ შეიქმნა ლურსმული დამწერლობა ძვ. წ. 3400-3200 წლებში. ურუქის მთავარი ღვთაება იყო ინანა (ვენერას ქალღმერთი).</p>
+  
+  <h3>ური (Ur)</h3>
+  <p>ური განთქმული იყო ურის III დინასტიით (ძვ. წ. 2112-2004). აქ აღმოჩენილია ცნობილი "ურის დროშა" და მეფეთა სამარხები ოქროს მდიდრული ინვენტარით.</p>
+  
+  <h3>ლაგაში (Lagash)</h3>
+  <p>ლაგაში ცნობილია მეფე გუდეას მმართველობით, რომლის ქანდაკებებიც შემორჩენილია. ლაგაშში აღმოჩენილია მნიშვნელოვანი სამართლებრივი დოკუმენტები.</p>
+  
+  <h4>📚 ლიტერატურა:</h4>
+  <ul>
+    <li>Kramer, S. N. (1963). The Sumerians: Their History, Culture, and Character.</li>
+    <li>📥 <a href="pdfs/uruk-period.pdf" download>ურუქის პერიოდის არქეოლოგია (PDF)</a></li>
+  </ul>
+</div>
 </main>
 
 </div>
@@ -229,7 +247,17 @@ function showAcadPeriod(){
 function openImage(src){
   window.open(src,'_blank');
 }
+
+// შუმერული ქალაქ-სახელმწიფოების გამოჩენა
+function showSumerianStates() {
+  var element = document.getElementById('sumerian-states');
+  if(element) {
+    element.style.display = 'block';
+    element.scrollIntoView({behavior: "smooth"});
+  }
+}
 </script>
 
 </body>
+
 </html>
