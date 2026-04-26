@@ -5,262 +5,527 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ძველი შუამდინარეთის ელექტრონული პორტალი</title>
 <style>
-body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f4f4f4}
-header{background:#1b1b1b;color:white;padding:20px}
-header h1{margin:0;font-size:22px}
-.container{display:flex}
-nav{width:280px;background:#2c2c2c;color:white;height:100vh;overflow:auto}
-nav ul{list-style:none;padding:0;margin:0}
-nav li{padding:10px 15px;border-bottom:1px solid #444;cursor:pointer;position:relative}
-nav li:hover{background:#444}
-nav li.active{background:#FFD700;color:#1b1b1b;font-weight:bold}
-.sub{display:none;background:#ffffff;color:#000;}
-.sub li{padding-left:30px;border-bottom:1px solid #ccc;cursor:pointer;}
-main{flex:1;padding:30px;overflow:auto;position:relative}
-.card{background:white;padding:20px;margin-bottom:20px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
-.table{width:100%;border-collapse:collapse}
-.table td{border-bottom:1px solid #ddd;padding:8px}
-.artifact-images{display:flex;margin-bottom:10px;gap:10px}
-.artifact-images img{max-width:150px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.2);cursor:pointer;}
-.search-box{margin-bottom:20px}
-.search-box input{width:100%;padding:8px;border-radius:5px;border:1px solid #ccc;font-size:14px}
-footer{text-align:center;padding:15px;background:#1b1b1b;color:white}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* მობილურისთვის */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-    
-    nav {
-        width: 100%;
-        height: auto;
-        max-height: 300px;
-        overflow-y: auto;
-    }
-    
-    main {
-        padding: 15px;
-    }
-    
-    .artifact-images {
-        flex-wrap: wrap;
-    }
-    
-    .artifact-images img {
-        max-width: 100%;
-        height: auto;
-    }
-    
-    header h1 {
-        font-size: 18px;
-    }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0ece4;
+  color: #222;
 }
 
-/* აქადის ტექსტის ფანჯარა */
-#acadText{display:none;background:#f9f9f9;padding:20px;margin-top:20px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
-#acadGallery{display:none;margin-top:10px;display:flex;gap:10px;}
-#acadGallery img{width:100px;cursor:pointer;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.2);}
+header {
+  background: #1b1b1b;
+  color: white;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.container {
+  display: flex;
+  min-height: calc(100vh - 54px - 46px);
+}
+
+/* ========== NAV ========== */
+nav {
+  width: 280px;
+  min-width: 280px;
+  background: #2c2c2c;
+  color: white;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.search-box-nav {
+  padding: 12px;
+  background: #1f1f1f;
+}
+
+.search-box-nav input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background: #3a3a3a;
+  color: white;
+  font-size: 13px;
+}
+
+.search-box-nav input::placeholder { color: #aaa; }
+
+nav ul {
+  list-style: none;
+}
+
+nav > ul > li {
+  border-bottom: 1px solid #3e3e3e;
+}
+
+nav li {
+  cursor: pointer;
+  position: relative;
+}
+
+/* პირველი დონის ელემენტი */
+nav > ul > li > a,
+nav > ul > li > span {
+  display: block;
+  padding: 11px 15px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.15s;
+}
+
+nav > ul > li:hover > a,
+nav > ul > li:hover > span {
+  background: #444;
+}
+
+nav > ul > li.active > span {
+  background: #c8a84b;
+  color: #1b1b1b;
+  font-weight: bold;
+}
+
+/* ქვემენიუ */
+.sub {
+  display: none;
+  list-style: none;
+  background: #ffffff;
+}
+
+.sub li {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.sub li > a,
+.sub li > span {
+  display: block;
+  padding: 9px 15px 9px 28px;
+  color: #222;
+  text-decoration: none;
+  font-size: 13px;
+  transition: background 0.15s;
+}
+
+.sub li:hover > a,
+.sub li:hover > span {
+  background: #f5f0e8;
+}
+
+/* მეორე დონის ქვემენიუ */
+.sub .sub li > a,
+.sub .sub li > span {
+  padding-left: 44px;
+}
+
+.sub.open { display: block; }
+
+/* ========== MAIN ========== */
+main {
+  flex: 1;
+  padding: 28px;
+  overflow: auto;
+}
+
+.search-box-main {
+  margin-bottom: 20px;
+}
+
+.search-box-main input {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background: white;
+}
+
+.card {
+  background: white;
+  padding: 22px 24px;
+  margin-bottom: 22px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+}
+
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #1b1b1b;
+}
+
+.card p {
+  line-height: 1.7;
+  color: #444;
+  font-size: 14.5px;
+}
+
+/* ========== ACAD TEXT ========== */
+#acadText {
+  display: none;
+  background: #fff;
+  padding: 26px;
+  margin-top: 22px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+  line-height: 1.75;
+}
+
+#acadText h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: #1b1b1b;
+  border-bottom: 2px solid #c8a84b;
+  padding-bottom: 8px;
+}
+
+#acadText p {
+  margin-bottom: 16px;
+  font-size: 14.5px;
+  color: #333;
+  white-space: pre-line;
+}
+
+#acadGallery {
+  display: none;
+  margin-top: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+#acadGallery img {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+#acadGallery img:hover { transform: scale(1.05); }
+
+/* ========== SUMERIAN ========== */
+#sumerian-states {
+  display: none;
+  background: #fff;
+  padding: 26px;
+  margin-top: 22px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+}
+
+#sumerian-states h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: #1b1b1b;
+  border-bottom: 2px solid #c8a84b;
+  padding-bottom: 8px;
+}
+
+#sumerian-states h3 {
+  font-size: 16px;
+  margin: 16px 0 6px;
+  color: #333;
+}
+
+#sumerian-states h4 {
+  font-size: 14px;
+  margin: 14px 0 6px;
+  color: #555;
+}
+
+#sumerian-states p {
+  font-size: 14.5px;
+  color: #444;
+  line-height: 1.7;
+}
+
+#sumerian-states ul {
+  margin-left: 20px;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.8;
+}
+
+#sumerian-states a { color: #8a6a10; }
+
+/* ========== FOOTER ========== */
+footer {
+  text-align: center;
+  padding: 14px;
+  background: #1b1b1b;
+  color: #aaa;
+  font-size: 13px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .container { flex-direction: column; }
+
+  nav {
+    width: 100%;
+    min-width: unset;
+    max-height: 320px;
+  }
+
+  main { padding: 16px; }
+
+  #acadGallery img {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+/* სტრელკა ქვემენიუ ინდიკატორი */
+.has-sub > span::after {
+  content: ' ▸';
+  font-size: 11px;
+  opacity: 0.6;
+  float: right;
+}
+
+.has-sub.open > span::after {
+  content: ' ▾';
+}
 </style>
 </head>
 <body>
 
 <header>
-<h1>ძველი შუამდინარეთის ელექტრონული პორტალი</h1>
+  <h1>ძველი შუამდინარეთის ელექტრონული პორტალი</h1>
 </header>
 
 <div class="container">
 
-<nav>
-<div class="search-box">
-<input type="text" id="navSearch" placeholder="ძიება..." onkeyup="filterNav()">
-</div>
-<ul id="menu">
-  <li onclick="toggleSub(event,this)">ისტორია
-    <ul class="sub">
-     <li><a href="sumerian-states.html" style="color:black; text-decoration:none; display:block;">შუმერული ქალაქ-სახელმწიფოები</a></li>
-      <li><a href="akkadian.html" style="color:black; text-decoration:none; display:block;">აქადის იმპერია</a></li>
-      <li>ურს III დინასტია</li>
-      <li onclick="toggleSub(event,this)">ბაბილონი
+  <nav>
+    <div class="search-box-nav">
+      <input type="text" id="navSearch" placeholder="ძიება მენიუში..." oninput="filterNav()">
+    </div>
+
+    <ul id="menu">
+
+      <li class="has-sub">
+        <span onclick="toggleSub(this)">ისტორია</span>
         <ul class="sub">
-          <!-- შეცვლილი ხაზი: ახლა ბმულია -->
-          <li><a href="old_babylon.html" style="color:black; text-decoration:none; display:block;">ძველი ბაბილონი</a></li>
-          <li>შუა ბაბილონი</li>
-          <li>ახალი ბაბილონი</li>
+          <li><a href="sumerian-states.html">შუმერული ქალაქ-სახელმწიფოები</a></li>
+          <li><a href="akkadian.html">აქადის იმპერია</a></li>
+          <li><span>ურს III დინასტია</span></li>
+          <li class="has-sub">
+            <span onclick="toggleSub(this)">ბაბილონი</span>
+            <ul class="sub">
+              <li><a href="old_babylon.html">ძველი ბაბილონი</a></li>
+              <li><span>შუა ბაბილონი</span></li>
+              <li><span>ახალი ბაბილონი</span></li>
+            </ul>
+          </li>
+          <li class="has-sub">
+            <span onclick="toggleSub(this)">ასურეთი</span>
+            <ul class="sub">
+              <li><span>ძველი სამეფო</span></li>
+              <li><span>შუა სამეფო</span></li>
+              <li><span>ახალი სამეფო</span></li>
+            </ul>
+          </li>
+          <li><span>კასიტები</span></li>
+          <li><span>მითანი</span></li>
+          <li><span>ხეთები</span></li>
+          <li><span>პერიფერია</span></li>
         </ul>
       </li>
-      <li onclick="toggleSub(event,this)">ასურეთი
+
+      <li class="has-sub">
+        <span onclick="toggleSub(this)">ხელოვნება</span>
         <ul class="sub">
-          <li>ძველი სამეფო</li>
-          <li>შუა სამეფო</li>
-          <li>ახალი სამეფო</li>
+          <li class="has-sub">
+            <span onclick="toggleSub(this)">საბეჭდავები</span>
+            <ul class="sub">
+              <li><span>ურუქ-ვარქას პერიოდი</span></li>
+              <li><span>ადრედინასტიური პერიოდი</span></li>
+              <li><span onclick="showAcadPeriod()">აქადური პერიოდი</span></li>
+              <li><span>პოსტაქადური - ურის III</span></li>
+              <li><span>ძველ ბაბილონური პერიოდი</span></li>
+              <li><span>კასიტური პერიოდი</span></li>
+              <li><span>ასურული პერიოდი</span></li>
+              <li><span>აქემენიდური პერიოდი</span></li>
+            </ul>
+          </li>
+          <li><span>სხვა არტეფაქტები</span></li>
         </ul>
       </li>
-      <li>კასიტები</li>
-      <li>მითანი</li>
-      <li>ხეთები</li>
-      <li>პერიფერია</li>
+
+      <li><a href="inscriptions.html" style="display:block;padding:11px 15px;color:white;text-decoration:none;font-size:14px;">წარწერები</a></li>
+      <li><a href="translations.html" style="display:block;padding:11px 15px;color:white;text-decoration:none;font-size:14px;">თარგმანები</a></li>
+
+      <li class="has-sub">
+        <span onclick="toggleSub(this)">სტატიები</span>
+        <ul class="sub">
+          <li><a href="articles.html" target="_blank" rel="noopener">სამეცნიერო სტატიები</a></li>
+          <li><a href="pdf-library.html" target="_blank" rel="noopener">📚 PDF ბიბლიოთეკა</a></li>
+        </ul>
+      </li>
+
+      <li><a href="misc.html" style="display:block;padding:11px 15px;color:white;text-decoration:none;font-size:14px;">სხვადასხვა</a></li>
+
     </ul>
-  </li>
-  <li onclick="toggleSub(event,this)">ხელოვნება
-    <ul class="sub">
-      <li onclick="toggleSub(event,this)">საბეჭდავები
-        <ul class="sub">
-          <li>ურუქ-ვარქას პერიოდი</li>
-          <li>ადრედინასტიური პერიოდი</li>
-          <li onclick="showAcadPeriod()">აქადური პერიოდი</li>
-          <li>პოსტაქადური - ურის III</li>
-          <li>ძველ ბაბილონური პერიოდი</li>
-          <li>კასიტური პერიოდი</li>
-          <li>ასურული პერიოდი</li>
-          <li>აქემენიდური პერიოდი</li>
-        </ul>
-      </li>
-      <li>სხვა არტეფაქტები</li>
-    </ul>
-  </li>
-  <!-- გამოყენებულია პირდაპირი <a> ბმული -->
-  <li><a href="inscriptions.html" style="color:white;text-decoration:none;display:block;">წარწერები</a></li>
-  <li><a href="translations.html" style="color:white;text-decoration:none;display:block;">თარგმანები</a></li>
-    <li onclick="toggleSub(event,this)">სტატიები
-  <ul class="sub">
-    <li>
-      <a href="articles.html" target="_blank" style="color:black;text-decoration:none;display:block;">
-      სამეცნიერო სტატიები
-      </a>
-    </li>
+  </nav>
 
-    <li>
-      <a href="pdf-library.html" target="_blank" style="color:black;text-decoration:none;display:block;">
-      📚 PDF ბიბლიოთეკა
-      </a>
-    </li>
-  </ul>
-</li>
-  <li><a href="misc.html" style="color:white;text-decoration:none;display:block;">სხვადასხვა</a></li>
-</ul>
-</nav>
+  <main>
 
+    <div class="search-box-main">
+      <input type="text" id="artifactSearch" placeholder="ძიება ინვენტარის ნომრით..." oninput="searchArtifact()">
+    </div>
 
-<main>
+    <div class="card">
+      <h2>საიტის მიზანი</h2>
+      <p>ეს პორტალი წარმოადგენს ძველი შუამდინარეთის აკადემიურ მონაცემთა ბაზას. საიტი მოიცავს ისტორიას, ხელოვნებას, ლურსმულ ტექსტებს, თარგმანებსა და სამეცნიერო სტატიებს.</p>
+    </div>
 
-<div class="search-box">
-<input type="text" id="artifactSearch" placeholder="ძიება ინვენტარის ნომრით..." onkeyup="searchArtifact()">
-</div>
+    <!-- აქადის ტექსტის ფანჯარა -->
+    <div id="acadText">
+      <h2>აქადის პერიოდი — გლიპტიკა</h2>
+      <p>
+აქადის პერიოდი იწყება სახვით ხელოვნებაში ახალი ე.წ. გლიპტიკის „აქადური სტილის" აღმოცენებით. ეს სტილი არ არის გვიანი ED II-III ფორმების უბრალო ევოლუცია, არამედ მხატვრული განვითარების სრულიად ახალ, განსხვავებული ეტაპს წარმოადგენს.
 
-<div class="card">
-<h2>საიტის მიზანი</h2>
-<p>ეს პორტალი წარმოადგენს ძველი შუამდინარეთის აკადემიურ მონაცემთა ბაზას. საიტი მოიცავს ისტორიას, ხელოვნებას, ლურსმულ ტექსტებს, თარგმანებსა და სამეცნიერო სტატიებს.</p>
-</div>
-
-<!-- აქადის ტექსტის ფანჯარა -->
-<div id="acadText" style="display:none;background:#f9f9f9;padding:20px;margin-top:20px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1); white-space: pre-line;">
-<h2>აქადის პერიოდი</h2>
-<p>
-აქადის პერიოდი იწყება სახვით ხელოვნებაში ახალი ე.წ. გლიპტიკის „აქადური სტილის“ აღმოცენებით. ეს სტილი არ არის გვიანი ED II-III ფორმების უბრალო ევოლუცია, არამედ მხატვრული განვითარების სრულიად ახალ, განსხვავებული ეტაპს წარმოადგენს.
-ადრედინასტიური გლიპტიკისგან განსხვავებით, რომელიც ხშირად განმეორებადი იყო და მოიცავდა სიმეტრიულ ცხოველთა ბრძოლის ფრიზებს, აქადურმა სტილმა შემოიტანა მრავალი განსხვავება, როგორიცაა: თემატური ცვლილებები, ახალი სიუჟეტები. აქადის ხანის ოსტატებმა უარი თქვეს უბრალო დეკორატიულ განმეორებებზე და შექმნეს დინამიკური, ნარატიული სცენები. მაგალითად, ღმერთების ბრძოლა და მითოლოგიური სცენები, ღვთებათა მითოლოგიური სცენების ილუსტრირება, ადამიანი-ხარის ნაცვლად გმირის წინა პლანზე წამოწევა და რაც მთავარია სამხრეთ შუამდინარული პანთეონის გამოსახვა ყველა სახასიათო დეტალით, რითაც რელიგიის გათავისება გამოაცხადეს.
-</p>
-<p>
+ადრედინასტიური გლიპტიკისგან განსხვავებით, რომელიც ხშირად განმეორებადი იყო და მოიცავდა სიმეტრიულ ცხოველთა ბრძოლის ფრიზებს, აქადურმა სტილმა შემოიტანა მრავალი განსხვავება, როგორიცაა: თემატური ცვლილებები, ახალი სიუჟეტები. აქადის ხანის ოსტატებმა უარი თქვეს უბრალო დეკორატიულ განმეორებებზე და შექმნეს დინამიკური, ნარატიული სცენები.
+      </p>
+      <p>
 საბეჭდავების ძირითადი სცენები:
-1) ღმერთების ბრძოლა - ეს არის ერთ-ერთი ყველაზე დიდი სიახლე და არც თუ ისე გავრცელებული თემა (მურის გამონაკლის ნიმუშებს მიეკუთვნება) ამ პერიოდის საბეჭდავების ხელოვნებაში. საბეჭდავებზე გამოსახულია ღვთაებები, რომლებიც ერთმანეთს უპირისპირდებიან, ან გმირები, რომლებიც ებრძვიან მითოლოგიურ ურჩხულებსა და დემონებს. ეს არის ED პაექრობის სცენების გაგრძელება, სადაც ღმერთები მონაწილეობენ.
-2) ნადიმის სცენები (ადრედინასტიური პერიოდის) გარდაიქმნა მითოლოგიური სცენების ილუსტრაციად, სადაც ღმერთები მონაწილეობენ.
-3) გმირის გამოსახვა ადამიანი-ხარის ნაცვლად: ადრედინასტიურ პერიოდის გავრცელებული მოდელი – ენქიდუს ინსპირაციით ადამიანი-ხარის გამოსახულება, აქადურ ხანაში ე.წ. „შიშველი გმირის“ ფიგურამ ჩაანაცვლა, რომელიც იბრძვის ლომების ან სხვა მტაცებლების წინააღმდეგ.
-შიშველი გმირი, ხშირად ლახმუს (Lahmu) უწოდებენ. ეს სახელი ნიშნავს „თმიანს“. მას აქვს ექვსი დამახასიათებელი კულული (თმის ხვეული) და გრძელი წვერი. ის არის კოსმოსური წესრიგის მცველი, ხშირად ასოცირებული წყლის ღმერთ ენქისთან (ეასთან). სწორედ ამიტომ, საბეჭდავებზე მას ხშირად უჭირავს „ჭურჭელი საიდანაც გადმოედინება წყალი“ ან დგას წყლის ნაკადებთან. ლახმუ ჩაენაცვლა ადამიან-ხარს ლომებთან ბრძოლის სცენებში. ის მათ უკანა ფეხებით იჭერს ან ყელში სწვდება, რაც ცივილიზაციის გამარჯვებას ნიშნავს ქაოსზე.
-4) ანთროპოლოგიურ გამოსახვაზე გადასვლა. ამ შემთხვევაში ღმერთები და გმირები ძირითადად ადამიანურ ფორმებს იღებენ და არა სიმბოლურ ან ჰერალდიკურს. ისინი ხშირად გამოსახულნი არიან მმართველისმფარველობით ან ლოცვის სცენებში, რაც ხაზს უსვამს ღვთაებრივ ლეგიტიმაციას ცენტრალიზებული იმპერიული ძალაუფლებისთვის.
-5) პანთეონის გამოსახვა – აქადური პერიოდის ინოვაციაა. ხდება ღვთაებათა სახეების დადგენა, თავისი ინსიგნიები, სახე, სამოსი, რასაც აქადელი ოსტატები წარსულიდან იღებენ და სრულყოფენ, აძლევენ ანთროპომორფულ სახეს. ეს არის აქადის იმპერიის სრული ლეგიტიმაცია, სამხრეთ შუამდინარეთის პანთეონზე.
-გარდამტეხი ფაქტორია ე.წ სტილისტური ინოვაციები, როგორიცაა შესრულების ტექნიკა და კომპოზიცია. აქადური საბეჭდავები გამოირჩევიან არა მხოლოდ სიუჟეტებით, არამედ მათი შესრულების ოსტატობით. აქ სცენები არ არის სტატიკური / გაყინული. ფიგურები გამოსახულია დრამატულ მოძრაობაში, ისინი იხრებიან, იბრძვიან, გარბიან. ეს ყველაფერი ქმნის ძლიერ ნარატიულ დაძაბულობას მთლიან კომპოზიციაში.
-კიდევ ერთი განმასხვავებელი ნიშანი არის საბეჭდავზე და თუნდაც ამ პერიოდის ნებისმიერ ხელოვნების ნიმუშზე თავისუფალი სივრცის არსებობა. როგორც უკვე ზემოთ ავღნიშნეთ, ადრედინასტიური ხელოვნება ხშირად „ავსებდა“ მთელ ზედაპირს სხვადასხვა ფიგურებით, აქადელი ოსტატები კი იყენებდნენ უფრო ნაკლებ, მაგრამ შედარებით დიდ ფიგურებს, რაც კომპოზიციას უფრო მკაფიოსა და აღქმადს ხდიდა. აქადური საბეჭდავები, როგორც წესი, შესრულებულია უფრო მაღალი რელიეფით (ღრმა კვეთით) და ფიგურები უფრო მოცულობითია (ქმნის ე.წ სამგანზომილებიან ეფექტს). ეს მათ თითქმის ქანდაკებებს ამსგავსებს სიბრტყეზე. ისეთი დეტალები, როგორიცაა კუნთები, ტანსაცმლის ნაკეცები და თმა, ბევრად უფრო დახვეწილი და რეალისტურია, რაც მანამდე უპრეცედენტო ნატურალიზმს ანიჭებს ფიგურებს.
-შესაბამისად, ამის გათვალისწინებით, ის არქეოლოგიური კომპლექსები, რომლებიც შეიცავს გლიპტიკის დიდ კოლექციას, მაგრამ არც ერთ აქადურ დიზაინს, უნდა დათარიღდეს, როგორც ადრედინასტიური III B პერიოდით.
-ხოლო კომპლექსი ან ფენა, რომელიც შეიცავს თუნდაც ერთ აქადურ გლიპტიკის ნიმუშს და მასთან ერთად თავს იყრის სხვა სახის არქეოლოგიური არტეფაქტები, რომელიც ED III B-ს ჰგავს, უნდა დათარიღდეს, როგორც აქადური (ან „სავარაუდოდ ადრეული აქადური“, როგორც ნიფურის IV ფენის შემთხვევაში).
-</p>
-<div id="acadGallery">
-<img src="acad1.jpg" onclick="openImage(this.src)" alt="Acad Art 1">
-<img src="acad2.jpg" onclick="openImage(this.src)" alt="Acad Art 2">
-<img src="acad3.jpg" onclick="openImage(this.src)" alt="Acad Art 3">
-</div>
-</div>
-<!-- შუმერული ქალაქ-სახელმწიფოების სტატია (ფარული) -->
-<div id="sumerian-states" style="display:none; background:#f9f9f9; padding:20px; margin-top:20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
-  <h2>შუმერული ქალაქ-სახელმწიფოები</h2>
-  
-  <h3>ურუქი (Uruk)</h3>
-  <p>ურუქი იყო ერთ-ერთი პირველი და უდიდესი შუმერული ქალაქ-სახელმწიფო. სწორედ აქ შეიქმნა ლურსმული დამწერლობა ძვ. წ. 3400-3200 წლებში. ურუქის მთავარი ღვთაება იყო ინანა (ვენერას ქალღმერთი).</p>
-  
-  <h3>ური (Ur)</h3>
-  <p>ური განთქმული იყო ურის III დინასტიით (ძვ. წ. 2112-2004). აქ აღმოჩენილია ცნობილი "ურის დროშა" და მეფეთა სამარხები ოქროს მდიდრული ინვენტარით.</p>
-  
-  <h3>ლაგაში (Lagash)</h3>
-  <p>ლაგაში ცნობილია მეფე გუდეას მმართველობით, რომლის ქანდაკებებიც შემორჩენილია. ლაგაშში აღმოჩენილია მნიშვნელოვანი სამართლებრივი დოკუმენტები.</p>
-  
-  <h4>📚 ლიტერატურა:</h4>
-  <ul>
-    <li>Kramer, S. N. (1963). The Sumerians: Their History, Culture, and Character.</li>
-    <li>📥 <a href="pdfs/uruk-period.pdf" download>ურუქის პერიოდის არქეოლოგია (PDF)</a></li>
-  </ul>
-</div>
-</main>
 
+1) ღმერთების ბრძოლა — ეს არის ერთ-ერთი ყველაზე დიდი სიახლე ამ პერიოდის გლიპტიკაში. საბეჭდავებზე გამოსახულია ღვთაებები, რომლებიც ერთმანეთს უპირისპირდებიან, ან გმირები, რომლებიც ებრძვიან მითოლოგიურ ურჩხულებსა და დემონებს.
+
+2) ნადიმის სცენები (ადრედინასტიური პერიოდიდან) გარდაიქმნა მითოლოგიური სცენების ილუსტრაციად, სადაც ღმერთები მონაწილეობენ.
+
+3) გმირის გამოსახვა — ადრედინასტიური პერიოდის გავრცელებული მოდელი, ე.წ. „ადამიანი-ხარი", აქადურ ხანაში „შიშველი გმირის" ფიგურამ ჩაანაცვლა. ამ გმირს ხშირად ლახმუს (Lahmu) უწოდებენ — სახელი ნიშნავს „თმიანს". მას აქვს ექვსი დამახასიათებელი კულული და გრძელი წვერი.
+
+4) ანთროპომორფულ გამოსახვაზე გადასვლა — ღმერთები და გმირები ძირითადად ადამიანურ ფორმებს იღებენ და არა სიმბოლურ ან ჰერალდიკურს.
+
+5) პანთეონის გამოსახვა — ხდება ღვთაებათა სახეების დადგენა, თავისი ინსიგნიებით, სამოსით, რასაც აქადელი ოსტატები სრულყოფენ და ანთროპომორფულ სახეს აძლევენ.
+      </p>
+      <p>
+სტილისტური ინოვაციები:
+
+აქადური საბეჭდავები გამოირჩევიან არა მხოლოდ სიუჟეტებით, არამედ შესრულების ოსტატობითაც. სცენები არ არის სტატიკური — ფიგურები გამოსახულია დრამატულ მოძრაობაში. ადრედინასტიური ხელოვნებისაგან განსხვავებით, რომელიც „ავსებდა" მთელ ზედაპირს, აქადელი ოსტატები იყენებდნენ ნაკლებ, მაგრამ შედარებით მსხვილ ფიგურებს, კომპოზიცია კი უფრო მკაფიო და აღქმადი ხდებოდა. საბეჭდავები შესრულებულია უფრო მაღალი რელიეფით (ღრმა კვეთით) და ფიგურები თითქმის სამგანზომილებიანი ეფექტს ქმნიან.
+      </p>
+      <div id="acadGallery">
+        <img src="acad1.jpg" onclick="openImage(this.src)" alt="აქადური ხელოვნება 1" onerror="this.style.display='none'">
+        <img src="acad2.jpg" onclick="openImage(this.src)" alt="აქადური ხელოვნება 2" onerror="this.style.display='none'">
+        <img src="acad3.jpg" onclick="openImage(this.src)" alt="აქადური ხელოვნება 3" onerror="this.style.display='none'">
+      </div>
+    </div>
+
+    <!-- შუმერული ქალაქ-სახელმწიფოების სექცია -->
+    <div id="sumerian-states">
+      <h2>შუმერული ქალაქ-სახელმწიფოები</h2>
+
+      <h3>ურუქი (Uruk)</h3>
+      <p>ურუქი იყო ერთ-ერთი პირველი და უდიდესი შუმერული ქალაქ-სახელმწიფო. სწორედ აქ შეიქმნა ლურსმული დამწერლობა ძვ. წ. 3400–3200 წლებში. ურუქის მთავარი ღვთაება იყო ინანა (ვენერას ქალღმერთი).</p>
+
+      <h3>ური (Ur)</h3>
+      <p>ური განთქმული იყო ურის III დინასტიით (ძვ. წ. 2112–2004). აქ აღმოჩენილია ცნობილი „ურის დროშა" და მეფეთა სამარხები ოქროს მდიდრული ინვენტარით.</p>
+
+      <h3>ლაგაში (Lagash)</h3>
+      <p>ლაგაში ცნობილია მეფე გუდეას მმართველობით, რომლის ქანდაკებებიც შემორჩენილია. ლაგაშში აღმოჩენილია მნიშვნელოვანი სამართლებრივი დოკუმენტები.</p>
+
+      <h4>📚 ლიტერატურა:</h4>
+      <ul>
+        <li>Kramer, S. N. (1963). <em>The Sumerians: Their History, Culture, and Character.</em></li>
+        <li>📥 <a href="pdfs/uruk-period.pdf" download>ურუქის პერიოდის არქეოლოგია (PDF)</a></li>
+      </ul>
+    </div>
+
+  </main>
 </div>
 
 <footer>
-Mesopotamian Research Portal
+  Mesopotamian Research Portal · ძველი შუამდინარეთის ელექტრონული პორტალი
 </footer>
 
 <script>
-function toggleSub(event, el){
-  if(event) event.stopPropagation();
-  el.classList.toggle('active');
-  const sub = el.querySelector(':scope > .sub');
-  if(sub){
-    sub.style.display = sub.style.display === 'block' ? 'none' : 'block';
-  }
+// ========== SUB-MENU TOGGLE ==========
+function toggleSub(el) {
+  // el = <span> — მივიღოთ parent <li>
+  const li = el.parentElement;
+  const sub = li.querySelector(':scope > .sub');
+  if (!sub) return;
+
+  const isOpen = sub.classList.contains('open');
+  sub.classList.toggle('open', !isOpen);
+  li.classList.toggle('open', !isOpen);
 }
 
-// Sidebar search
-function filterNav(){
-  const val = document.getElementById('navSearch').value.toUpperCase();
-  document.querySelectorAll('nav li').forEach(li=>{
-    if(li.textContent.toUpperCase().includes(val)){
-      li.style.display='block';
-    } else {
-      li.style.display='none';
+// ========== NAV SEARCH ==========
+function filterNav() {
+  const val = document.getElementById('navSearch').value.toLowerCase().trim();
+  const allLi = document.querySelectorAll('#menu li');
+
+  if (!val) {
+    // ყველა ჩვენება, ქვემენიუები დახურვა
+    allLi.forEach(li => {
+      li.style.display = '';
+    });
+    document.querySelectorAll('.sub').forEach(s => s.classList.remove('open'));
+    document.querySelectorAll('.has-sub').forEach(li => li.classList.remove('open'));
+    return;
+  }
+
+  allLi.forEach(li => {
+    const text = li.childNodes[0]?.textContent?.toLowerCase() || '';
+    const match = text.includes(val);
+    li.style.display = match ? '' : 'none';
+    if (match) {
+      // მშობელ li-ებს ჩვენება
+      let parent = li.parentElement;
+      while (parent && parent.id !== 'menu') {
+        if (parent.tagName === 'UL') parent.classList.add('open');
+        if (parent.tagName === 'LI') { parent.style.display = ''; parent.classList.add('open'); }
+        parent = parent.parentElement;
+      }
     }
   });
 }
 
-// Artifact search
-function searchArtifact(){
+// ========== ARTIFACT SEARCH ==========
+function searchArtifact() {
   const val = document.getElementById('artifactSearch').value.toUpperCase();
-  document.querySelectorAll('.artifact').forEach(a=>{
-    const id = a.getAttribute('data-id');
+  document.querySelectorAll('.artifact').forEach(a => {
+    const id = a.getAttribute('data-id') || '';
     a.style.display = id.toUpperCase().includes(val) ? 'block' : 'none';
   });
 }
 
-// აქადის ტექსტის გამოჩენა
-function showAcadPeriod(){
-  document.getElementById('acadText').style.display='block';
-  document.getElementById('acadGallery').style.display='flex';
-  document.getElementById('acadText').scrollIntoView({behavior: "smooth"});
+// ========== SHOW ACAD PERIOD ==========
+function showAcadPeriod() {
+  const el = document.getElementById('acadText');
+  const gallery = document.getElementById('acadGallery');
+  el.style.display = 'block';
+  gallery.style.display = 'flex';
+  setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
 }
 
-// გალერეის სურათის გახსნა ახალ ფანჯარაში
-function openImage(src){
-  window.open(src,'_blank');
-}
-
-// შუმერული ქალაქ-სახელმწიფოების გამოჩენა
+// ========== SHOW SUMERIAN STATES ==========
 function showSumerianStates() {
-  var element = document.getElementById('sumerian-states');
-  if(element) {
-    element.style.display = 'block';
-    element.scrollIntoView({behavior: "smooth"});
+  const el = document.getElementById('sumerian-states');
+  if (el) {
+    el.style.display = 'block';
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   }
+}
+
+// ========== OPEN IMAGE ==========
+function openImage(src) {
+  window.open(src, '_blank', 'noopener,noreferrer');
 }
 </script>
 
 </body>
-
 </html>
-
-
